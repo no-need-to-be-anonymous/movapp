@@ -2,10 +2,9 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { HEADER_NAVIGATION } from '../../../../data/headerNavigation';
-import { LOCALES } from '../../../../data/locales';
-import AppLogo from '../../../../public/movapp-logo.png';
+import { HEADER_NAVIGATION } from 'data/headerNavigation';
+import { LOCALES } from 'data/locales';
+import AppLogo from 'public/movapp-logo.png';
 
 export const Header = () => {
   const { t, i18n } = useTranslation('common');
@@ -23,13 +22,14 @@ export const Header = () => {
             {HEADER_NAVIGATION.map(({ name, link }, index) => {
               const activePage = router.asPath.includes(link);
               return (
-                <Link key={index} href={link}>
-                  <a>
-                    <li className={`${activePage && 'border-b-2 border-b-primary-yellow'} hover:text-primary-yellow text-white mx-2 `}>
-                      {t(name)}
-                    </li>
-                  </a>
-                </Link>
+                <li
+                  key={index}
+                  className={`${activePage && 'border-b-2 border-b-primary-yellow'} hover:text-primary-yellow text-white mx-2 `}
+                >
+                  <Link href={link}>
+                    <a>{t(name)}</a>
+                  </Link>
+                </li>
               );
             })}
           </ul>
@@ -38,9 +38,7 @@ export const Header = () => {
           return (
             <Link key={index} href={router.asPath} locale={locale}>
               <a>
-                <span className={`text-white cursor-pointer mx-2 ${i18n.language === locale && 'text-primary-yellow'}`} key={index}>
-                  {name}
-                </span>
+                <span className={`text-white cursor-pointer mx-2 ${i18n.language === locale && 'text-primary-yellow'}`}>{name}</span>
               </a>
             </Link>
           );

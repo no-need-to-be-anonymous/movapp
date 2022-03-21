@@ -1,5 +1,4 @@
-import React from 'react';
-import ChevronUp from '../../public/icons/chevron-up.svg';
+import ChevronUp from 'public/icons/chevron-up.svg';
 
 export const ScrollToTop = () => {
   const handleScrollTop = () => {
@@ -11,8 +10,8 @@ export const ScrollToTop = () => {
   };
 
   return (
-    <div onClick={handleScrollTop} className="fixed  bg-white bottom-6 right-6 cursor-pointer shadow-around p-2 rounded-md">
+    <button onClick={handleScrollTop} className="fixed  bg-white bottom-6 right-6 cursor-pointer shadow-around p-2 rounded-md">
       <ChevronUp />
-    </div>
+    </button>
   );
 };

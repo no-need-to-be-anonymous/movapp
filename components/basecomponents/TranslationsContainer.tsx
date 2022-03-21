@@ -1,7 +1,6 @@
-import React from 'react';
-import { createHighlightedText } from '../../utils/createHighlightedText';
 import { useTranslation } from 'next-i18next';
 import { Translation } from './Translation';
+import { Language } from 'data/locales';
 
 export interface Translation {
   cz_translation: string;
@@ -30,20 +29,18 @@ export const TranslationContainer = ({
   setPlayer,
   player,
 }: TranslationContainerProps): JSX.Element => {
-  const czTranslation = createHighlightedText(cz_translation, searchText);
-  const uaTranslation = createHighlightedText(ua_translation, searchText);
   const { i18n } = useTranslation();
 
-  const currentLanguage = i18n.language;
-  const secondaryLanguage = currentLanguage === 'ua' ? 'cz' : 'ua';
+  const currentLanguage = i18n.language as Language;
+  const secondaryLanguage: Language = currentLanguage === 'uk' ? 'cs' : 'uk';
 
   const languageTranslation = {
-    ua: {
-      translation: uaTranslation,
+    uk: {
+      translation: ua_translation,
       transcription: ua_transcription,
     },
-    cz: {
-      translation: czTranslation,
+    cs: {
+      translation: cz_translation,
       transcription: cz_transcription,
     },
   };
@@ -52,16 +49,18 @@ export const TranslationContainer = ({
     <div className="sm:grid sm:grid-cols-[50%_1px_50%]   sm:items-center  p-2  border-b-slate-200 bg-primary-white">
       {/* CZ translation  */}
       <Translation
-        currentLanguage={currentLanguage as 'ua' | 'cz'}
+        searchText={searchText}
+        currentLanguage={currentLanguage}
         player={player}
         setPlayer={setPlayer}
-        transcription={languageTranslation[currentLanguage as 'ua' | 'cz'].transcription}
-        translation={languageTranslation[currentLanguage as 'ua' | 'cz'].translation}
+        transcription={languageTranslation[currentLanguage].transcription}
+        translation={languageTranslation[currentLanguage].translation}
       />
       {/* Divider */}
       <div className="w-full h-0 sm:h-full sm:py-2 justify-self-center sm:w-0 border-1  border-[#D2D2D2]"></div>
       {/* UA translation  */}
       <Translation
+        searchText={searchText}
         currentLanguage={secondaryLanguage}
         player={player}
         setPlayer={setPlayer}
